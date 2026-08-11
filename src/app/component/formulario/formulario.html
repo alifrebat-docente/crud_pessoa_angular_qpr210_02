@@ -1,35 +1,46 @@
 <div id="div-form">
     <form id="form-pessoa">
         <label for="nome">Nome*</label>
-        <input type="text" name="nome" id="nome" [(ngModel)] = "nome" class="elem-form-01" required maxlength="60" placeholder="Seu nome">
+        <input type="text" name="nome" id="nome" [(ngModel)]="nome" class="elem-form-01" required maxlength="60"
+            placeholder="Seu nome">
 
         <label for="email">email*</label>
-        <input type="email" name="email" id="email" [(ngModel)] = "email" class="elem-form-01" required maxlength="60" placeholder="Seu email">
+        <input type="email" name="email" id="email" [(ngModel)]="email" class="elem-form-01" required maxlength="60"
+            placeholder="Seu email">
 
         <label for="cpf">CPF*</label>
-        <input type="number" name="cpf" id="cpf" [(ngModel)] = "cpf" class="elem-form-02" required maxlength="60" placeholder="Seu cpf">
+        <input type="number" name="cpf" id="cpf" [(ngModel)]="cpf" class="elem-form-02" required maxlength="60"
+            placeholder="Seu cpf">
 
         <label for="dataNascimento">dataNascimento*</label>
-        <input type="date" name="data-dataNascimento" id="dataNascimento" [(ngModel)] = "dataNascimento"  class="elem-form-02" required maxlength="60" placeholder="Seu data-nascimento">
+        <input type="date" name="data-dataNascimento" id="dataNascimento" [(ngModel)]="dataNascimento"
+            class="elem-form-02" required maxlength="60" placeholder="Seu data-nascimento">
 
         <label for="uf">UF*</label>
-        <select name="uf" id="uf" class="elem-form-02">
-            <option value="">UF</option>
-            <option value="Se">Se</option>
-            <option value="Ba">Ba</option>
-            <option value="Al">Al</option>
+        <select name="uf" [(ngModel)]="uf" (change)="carregarMunicipios()" class="elem-form-02">
+
+            <option selected>SELECIONE A UF</option>
+
+            @for (item of ufs; track item.id) {
+                <option [ngValue]="item">
+                    {{ item.sigla }} - {{ item.nome }}
+                </option>
+            }
         </select>
 
         <label for="cidade">Cidade*</label>
-        <select name="cidade" id="cidade" class="elem-form-02">
-            <option value="">Cidade</option>
-            <option value="Aracaju">Aracaju</option>
-            <option value="São Critóvão">São Critóvão</option>
-            <option value="Barra dos Coqueiros">Barra dos Coqueiros</option>
+        <select id="municipio" name="municipio" [(ngModel)]="municipio" [disabled]="municipios.length === 0" class="elem-form-02">
+            <option value="">SELECIONE O MUNICÍPIO</option>
+
+            @for (item of municipios; track item.id) {
+                <option [value]="item.nome">
+                    {{ item.nome }}
+                </option>
+            }
         </select>
 
         <div id="div-btns">
-            <button type="button" id="btnSalvar"(click)="save()"> {{edit ? 'Alterar' : 'Salvar'}} </button>
+            <button type="button" id="btnSalvar" (click)="save()"> {{edit ? 'Alterar' : 'Salvar'}} </button>
             <button type="reset" id="btnLimpar" (click)="limpaAtributos()"> Limpar </button>
         </div>
     </form>
