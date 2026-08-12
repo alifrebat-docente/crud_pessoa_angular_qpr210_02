@@ -5,7 +5,7 @@
         @for(elem of listaPessoa(); track elem.id ){
             <div class="div-item-pessoa">
                 <span class="item-pessoa">
-                    {{elem.id}} - {{elem.nome}} - {{elem.cpf}} - {{elem.dataNascimento}} - {{elem.email}} - {{elem.uf?.nome}} - {{elem.municipio}}
+                    {{elem.id}} - {{elem.nome}} - {{elem.cpf}} - {{elem.dataNascimento}} - {{elem.email}} - {{elem.uf}} - {{elem.municipio}}
                 </span>
                 <span class="btns-lista">
                     <a class="lnk-editar" (click)="buscarPorId(elem)"> Editar </a>
