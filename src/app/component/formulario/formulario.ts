@@ -19,8 +19,8 @@ export class Formulario {
   email = ''
   cpf = ''
   dataNascimento = ''
-  uf?: UF;
-  municipio?: Municipio;
+  uf = '';
+  municipio = ''
   ufs: UF[] = []
   municipios: Municipio[] = [];
 
@@ -37,8 +37,8 @@ export class Formulario {
     this.email = ''
     this.cpf = ''
     this.dataNascimento = ''
-    this.uf = undefined;
-    this.municipio = undefined;
+    this.uf = '';
+    this.municipio = '';
     this.ufs = [];
     this.municipios = [];
   }
@@ -49,7 +49,7 @@ export class Formulario {
     this.cpf = String(pessoa.cpf)
     this.dataNascimento = String(pessoa.dataNascimento)
     this.uf = pessoa.uf
-    this.municipio  = pessoa.municipio
+    this.municipio = pessoa.municipio
   }
 
   ngOnInit() {
@@ -63,9 +63,12 @@ export class Formulario {
       //OBSERVABLES
       this.pessoaService.buscarPorId(Number(idPessoa))
         .subscribe(objPessoa => {
-          if (objPessoa) {
-            this.carregaAtributos({ ...objPessoa })
+          if (!objPessoa) {
+            return
           }
+          this.carregaAtributos(objPessoa)
+
+          this.carregarUf()
         })
     }
 
@@ -81,6 +84,8 @@ export class Formulario {
     pessoa.dataNascimento = this.dataNascimento
     pessoa.uf = this.uf
     pessoa.municipio = this.municipio
+
+    console.log(pessoa.nome, ' UF: ', pessoa.uf, ' Cidade: ', pessoa.municipio)
 
     if (this.edit) {
       pessoa.id = this.idPessoaEdit
@@ -121,6 +126,10 @@ export class Formulario {
           //this.ufs = dadosUf
           this.ufs = [...dadosUf].sort((a, b) => a.nome.localeCompare(b.nome))
           // console.table(this.ufs)
+
+          if (this.uf) {
+            this.carregarMunicipios();
+          }
         },
         error: (msgErro) => {
           console.log('Erro ao listar UFs: ', msgErro)
@@ -134,15 +143,15 @@ export class Formulario {
     // limpa os municípios
     if (!this.uf) {
       this.municipios = [];
-      this.municipio = undefined;
+      this.municipio = '';
 
       return;
     }
 
-     //console.time('API - Municípios');
+    const objUf = this.ufs.find(elem => elem.sigla === this.uf)
 
     //this.ufMunicipioService.listarMunicipios(this.uf.sigla)
-    this.ufMunicipioService.listarMunicipiosIBGE(this.uf.id)
+    this.ufMunicipioService.listarMunicipiosIBGE(Number(objUf?.id))
       .subscribe({
         next: (dados) => {
           this.municipios = dados;
