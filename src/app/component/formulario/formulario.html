@@ -19,10 +19,10 @@
         <label for="uf">UF*</label>
         <select name="uf" [(ngModel)]="uf" (change)="carregarMunicipios()" class="elem-form-02">
 
-            <option selected>SELECIONE A UF</option>
+            <option selected [ngValue]="''">SELECIONE A UF</option>
 
             @for (item of ufs; track item.id) {
-                <option [ngValue]="item">
+                <option [ngValue]="item.sigla">
                     {{ item.sigla }} - {{ item.nome }}
                 </option>
             }
@@ -30,10 +30,11 @@
 
         <label for="cidade">Cidade*</label>
         <select id="municipio" name="municipio" [(ngModel)]="municipio" [disabled]="municipios.length === 0" class="elem-form-02">
-            <option value="">SELECIONE O MUNICÍPIO</option>
+
+          <option [ngValue]="''">SELECIONE O MUNICÍPIO</option>
 
             @for (item of municipios; track item.id) {
-                <option [value]="item.nome">
+                <option [ngValue]="item.nome">
                     {{ item.nome }}
                 </option>
             }
