@@ -60,6 +60,8 @@ export class Formulario {
     if (idPessoa) {
       this.edit = true
 
+      this.carregarUf()
+      
       //OBSERVABLES
       this.pessoaService.buscarPorId(Number(idPessoa))
         .subscribe(objPessoa => {
@@ -68,7 +70,6 @@ export class Formulario {
           }
           this.carregaAtributos(objPessoa)
 
-          this.carregarUf()
         })
     }
 
