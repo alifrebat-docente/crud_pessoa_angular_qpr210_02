@@ -50,9 +50,7 @@ h1 {
 }
 
 /*FORMATAÇÃO DOS BOTÕES*/
-a:link,
-a:visited,
-a:active {
+.lnk-editar, .lnk-excluir {
     text-decoration: none;
     text-transform: uppercase;
     color: var(--branca);
@@ -61,6 +59,7 @@ a:active {
     margin: 8px 0px;
     transition: opacity 0.5s ease;
     letter-spacing: 3px;
+    cursor: pointer;
 }
 
 a:hover {
